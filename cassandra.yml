@@ -1,0 +1,7 @@
+---
+- name: Cassandra common
+  hosts:
+    - cassandra_nodes
+  become: yes
+  roles:
+  - { role: cassandra, tags: ['cassandra'] }

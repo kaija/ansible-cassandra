@@ -1,0 +1,41 @@
+---
+- name: Install Oracle Java PPA
+  apt_repository: repo='ppa:webupd8team/java' state=present
+  register: ppastable
+
+- name: Accept Java 8 License
+  become: yes
+  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+- name: Install Oracle Java 8
+  become: yes
+  apt: name={{item}} state=latest
+  with_items:
+    - oracle-java8-installer
+    - ca-certificates
+    - oracle-java8-set-default
+
+- name: Install Datastax Repository
+  apt_key: url=http://debian.datastax.com/debian/repo_key state=present
+
+- name: Install cassandra apt source list
+  copy:
+    src=etc/apt/sources.list.d/datastax.list dest=/etc/apt/sources.list.d/datastax.list
+
+- name: update apt
+  apt: update_cache=yes
+
+- name: Copy python-support
+  copy: src=python-support_1.0.15_all.deb dest=/var/cache/apt/archives/python-support_1.0.15_all.deb
+
+- name: Install python-support package
+  apt: deb=/var/cache/apt/archives/python-support_1.0.15_all.deb
+
+- name: Install Datastax Community Cassandra & tools
+  apt: pkg={{item}} state=present
+  register: cassandra_installed_dce
+  with_items:
+  - dsc22={{ dsc_version }}
+  - cassandra={{ cassandra_version }}
+  - cassandra-tools={{ cassandra_tools_version }}
+
