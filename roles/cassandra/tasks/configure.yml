@@ -3,3 +3,4 @@
   template: src={{item}}.j2 dest=/{{item}} owner=root group=root mode=0644
   with_items:
   - etc/cassandra/cassandra-env.sh
+  - etc/cassandra/cassandra-rackdc.properties
