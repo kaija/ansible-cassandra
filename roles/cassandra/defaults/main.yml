@@ -1,3 +1,4 @@
 ---
-dc:		ap-northeast1
-rack:   a
+dc:	            ap-northeast1
+rack:           a
+num_tokens:     256
