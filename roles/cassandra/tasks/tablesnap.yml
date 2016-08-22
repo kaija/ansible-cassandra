@@ -1,6 +1,6 @@
 ---
 - name: create cassandra tablesnap
-  pip: tablesnap
+  pip: name=tablesnap
 
 - name: tablesnap bin symlink
   file: src=/usr/local/bin/tablesnap dest=/usr/bin/tablesnap state=link
