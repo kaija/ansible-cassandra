@@ -1,7 +1,12 @@
 ---
 - name: configure cassandra.yml
   template: src={{item}}.j2 dest=/{{item}} owner=root group=root mode=0644
+  notify:
+  - restart cassandra
   with_items:
   - etc/cassandra/cassandra-env.sh
   - etc/cassandra/cassandra-rackdc.properties
   - etc/cassandra/cassandra.yaml
+
+- name: cassandra service
+  service: name=cassandra state=started enabled=yes

@@ -23,8 +23,8 @@
     src=etc/apt/sources.list.d/datastax.list dest=/etc/apt/sources.list.d/datastax.list
 #  notify: apt update
 
-#- name: apt update
-#  apt: update_cache=yes
+- name: apt update
+  apt: update_cache=yes
 
 - name: Copy python-support
   copy: src=python-support_1.0.15_all.deb dest=/var/cache/apt/archives/python-support_1.0.15_all.deb
@@ -40,3 +40,6 @@
   - cassandra={{ cassandra_version }}
   - cassandra-tools={{ cassandra_tools_version }}
 
+- name: cassandra data folder
+  file: path=/data state=directory owner=cassandra group=cassandra mode=0755
+  file: path=/data/cassandra state=directory owner=cassandra group=cassandra mode=0755
