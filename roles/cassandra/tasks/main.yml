@@ -1,3 +1,10 @@
 ---
 - include: install.yml
+
 - include: configure.yml
+
+- include: repair.yml
+  when: "{{ cassandra_repair | default(true) }} == true"
+
+- include: tablesnap.yml
+  when: "{{ cassandra_tablesnap | default(true) }} == true"

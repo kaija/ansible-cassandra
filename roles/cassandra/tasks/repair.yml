@@ -1,0 +1,11 @@
+---
+- name: Create cassandra repair cron job
+  cron:
+  args:
+    name: "cassandra repair"
+    user: "root"
+    weekday: "{{repair_weekday}}"
+    hour: "{{repair_start_hour | default('0')}}"
+    minute: "{{repair_start_minute | default('0')}}"
+    job: "/usr/bin/nodetool repair -pr >> /var/log/cassandra_repair.log 2>&1"
+
