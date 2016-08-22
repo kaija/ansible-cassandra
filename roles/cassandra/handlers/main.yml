@@ -1,2 +1,13 @@
 - name: restart cassandra
   service: name=cassandra state=restarted
+
+- name: suspend cassandra
+  shell: "nodetool disablethrift && nodetool disablebinary && nodetool disablegossip && nodetool drain"
+  notify:
+  - stop cassandra
+
+- name: stop cassandra
+  service: name=cassandra state=stopped
+
+- name: start cassandra
+  service: name=cassandra state=started
